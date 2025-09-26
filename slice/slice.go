@@ -74,3 +74,24 @@ func Contains[T constraints.Ordered](elements []T, element T) bool {
 	// Return true if the element at the index equals the search element, otherwise false.
 	return index < len(copiedElements) && copiedElements[index] == element
 }
+
+// Map applies a transformation function to each element of a slice and returns a new slice with the transformed elements.
+// This function takes a slice of type A and applies the provided transformation function to each element,
+// resulting in a new slice of type B containing the transformed values.
+// It ensures that the order of elements is preserved in the output slice, and all transformations are applied correctly.
+func Map[A, B any](elements []A, fn func(A) B) []B {
+	// Create a slice of type B with the same length as the input slice.
+	// This ensures the result slice has sufficient capacity to store the transformed elements.
+	result := make([]B, len(elements))
+
+	// Iterate over the input slice to transform each element.
+	// The index and value of each element are retrieved during the iteration.
+	for i, v := range elements {
+		// Apply the transformation function to the current element and store the result in the corresponding position in the result slice.
+		// This preserves the original order of the elements while applying the transformation.
+		result[i] = fn(v)
+	}
+
+	// Return the resulting slice containing the transformed elements.
+	return result
+}
